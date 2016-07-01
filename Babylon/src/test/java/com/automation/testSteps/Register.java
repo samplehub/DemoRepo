@@ -37,7 +37,6 @@ public class Register {
 		capabilities.setCapability("BROWSER_NAME", "Android");
 		capabilities.setCapability("VERSION", "6.0");
 	    capabilities.setCapability("deviceName", "Emulator");
-		//capabilities.setCapability("deviceName", "BH907JV209");
 		capabilities.setCapability("platformName", "Android");
 		capabilities.setCapability("appPackage", "com.babylon");
 		capabilities.setCapability("appActivity", "com.babylon.activity.RegistrationActivity");
