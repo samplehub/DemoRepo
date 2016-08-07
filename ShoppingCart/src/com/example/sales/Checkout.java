@@ -1,41 +1,85 @@
 package com.example.sales;
 
-import java.util.Hashtable;
-import java.util.Scanner;
-
 public class Checkout {
 
-    Hashtable<String, Integer> priceList;
+	int totalCost,totalCostAmount, noOfApples, noOfOranges, newQuantityOfApples, newQuantityOfOranges, num = 0;
 
-    public Checkout() {
-        priceList = new Hashtable<String, Integer>();
-        // All prices are in p
-        priceList.put("apple", 60);
-        priceList.put("orange", 25);
-        priceList.put("banana", 10);
-    }
+	Item apples, oranges;
 
-    @SuppressWarnings("resource")
+	public Checkout(int noOfApples, int noOfOranges) {
+
+		apples = new Item("Apple", 1, 60);
+		oranges = new Item("Orange", 1, 25);
+
+		apples.setQuantity(noOfApples);
+		oranges.setQuantity(noOfOranges);
+
+	}
+
+	public int calcTotalCostWithOutDiscount() {
+
+		 totalCostAmount= ((apples.getPrice()) * apples.getQuantity()) + ((oranges.getPrice()) * oranges.getQuantity());
+
+		System.out.println("Total Cost without Discount " + totalCostAmount);
+
+		return totalCostAmount;
+	}
+
+	public int calcTotalCostWithDiscount() {
+
+		Checkout bill2 = new Checkout(6, 7);
+		totalCost = ((apples.getPrice()) * bill2.BuyOneGetFreeApple())
+				+ ((oranges.getPrice()) * bill2.BuyThreeForTwoOranges());
+
+		System.out.println("Total Cost with Discount " + totalCost);
+
+		return totalCost;
+	}
+
+	public int BuyOneGetFreeApple() {
+
+		if (apples.getQuantity() % 2 == 0) {
+
+			newQuantityOfApples = apples.getQuantity() / 2;
+			System.out.println(newQuantityOfApples);
+		} else {
+			num = apples.getQuantity();
+			num = num / 2;
+			newQuantityOfApples = num;
+			System.out.println(newQuantityOfApples);
+		}
+
+		return newQuantityOfApples;
+	}
+
+	public int BuyThreeForTwoOranges() {
+
+		if (oranges.getQuantity() > 2) {
+			newQuantityOfOranges = oranges.getQuantity() - (oranges.getQuantity() / 3);
+			System.out.println(newQuantityOfOranges);
+		}
+
+		return newQuantityOfOranges;
+	}
+
+	public void totalSavings()
+	{
+		
+	 int savingsAmount = totalCostAmount-totalCost;
+	
+	 System.out.println("Total Savings are "+ savingsAmount);
+	}
+	
 	public static void main(String[] args) {
 
-        Checkout checkout = new Checkout();
-        int totalCost = 0;
+		Checkout bill = new Checkout(6, 7);
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter list of items purchased separated by a comma: ");
+		bill.calcTotalCostWithOutDiscount();
+		bill.calcTotalCostWithDiscount();
 
-        String itemsList = scanner.nextLine();
-
-        String[] items = itemsList.split(",");
-        for (String item: items) {
-            if ( checkout.priceList.containsKey(item.trim()) ) {
-                totalCost += (Integer) checkout.priceList.get(item.trim());
-            } else {
-                System.out.format("Unknown item %s entered\n", item);
-            }
-        }
-
-        System.out.format("\nTotal cost of items: %d p", totalCost);
-
-    }
+		bill.totalSavings();
+		
+	
+	
+	}
 }
